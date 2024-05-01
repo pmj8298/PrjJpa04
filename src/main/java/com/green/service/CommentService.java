@@ -66,7 +66,7 @@ public class CommentService {
 
 // Article-게시글, Comment-댓글
 	
-	
+	// 2. 댓글 생성
 	@Transactional // 오류발생 시 db 를 rollback 하기 위해서(throw 를 사용하는 이유가 @Transactional을 발생시키기 위해)
 	public CommentDto create(Long articleId, CommentDto dto) {
 		// 1. 게시글 조회 및 조회실패 시 예외 발생
@@ -82,5 +82,34 @@ public class CommentService {
 		// 4. 저장된 Comments type created -> dto 로 변환 후 Controller 로 return
 		// 변환하는 이유가 Controller 에서 Entity type 을 사용하지 않기 위해
 		return CommentDto.createCommentDto(created);
+	}
+
+	// 3. 댓글 수정
+	@Transactional
+	public CommentDto update(Long id, CommentDto dto) {
+		// 1. 기존 댓글 조회 및 예외 발생(수정할거 없어요)
+		Comments target = commentRepository.findById(id).orElseThrow( () -> new IllegalArgumentException("댓글 수정 실패! 수정할 댓글이 없습니다")); // id : 댓글의 id
+		
+		// 2. 댓글 수정 : 조회한 데이터의 내용을 수정(class 안의 내용을 변경, 실제로 db 를 고치는 것이 아님)
+		// dto    : 수정할 입력받은 데이터
+		// target : 수정할 원본 데이터
+		target.patch(dto); // target 안에다가 dto(nickname, body) 를 넣어줌
+		
+		// 3. db 정보를 수정
+		Comments updated = commentRepository.save(target);
+		
+		// 4. updated -> commentDto로 변경하여 결과 return
+		return CommentDto.createCommentDto(updated);
+		
+	}
+	
+	// 4. 댓글 삭제
+	@Transactional
+	public CommentDto delete(Long id) {
+		// 1. 삭제할 댓글 조회 및 예외 처리
+		Comments target = commentRepository.findById(id).orElseThrow( () -> new IllegalArgumentException("댓글 삭제 실패! 대상이 없습니다"));
+		// 2. 실제 db 에서 삭제
+		// 3. 삭제 댓글을 dto 로 변환 후 리턴
+		return null;
 	}
 }

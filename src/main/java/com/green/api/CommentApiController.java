@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,11 +60,28 @@ public class CommentApiController {
 	}
 	
 	// 3. 댓글 수정(Patch)
-//	 @PatchMapping("/api/comments/{id}")
+	// Patch http://localhost:9090/api/comments/7
+	// 수정 전 데이터 {"article_id": 6,	"id":7,	"body":"조깅", "nickname":"Park"}
+	// 입력데이터{ "article_id": 6,	"id":7,	"body":"수영", "nickname":"Park2" }
+	 @PatchMapping("/api/comments/{id}")
+	 public ResponseEntity<CommentDto> update(
+			 @PathVariable Long id, 
+			 @RequestBody CommentDto dto  // 수정할 데이터를 가지고 있다
+			 ) {
+		 
+		 CommentDto updateDto = commentService.update(id, dto);
+		 
+		 return ResponseEntity.status(HttpStatus.OK).body(updateDto);
+	 }
 	
 	// 4. 댓글 삭제(Delete)
-//	@DeleteMapping("/api/comments/{id}")
-	 
+	// Delete http://localhost:9090/api/comments/7
+	@DeleteMapping("/api/comments/{id}")
+	 public ResponseEntity<CommentDto> delete(@PathVariable Long id){
+		CommentDto deletedDto = commentService.delete(id);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(deletedDto);
+	}
 	
 	
 }

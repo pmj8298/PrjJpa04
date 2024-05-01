@@ -57,4 +57,13 @@ public class Comments {
 				dto.getBody()         // 입력받은 댓글 내용
 				);
 	}
+
+	public void patch(CommentDto dto) {
+		if(this.id != dto.getId())
+			throw new IllegalArgumentException("댓글 수정 실패! 잘못된 아이디가 입력되었습니다");
+		if(dto.getNickname() != null)      // 수정할(입력받은) 닉네임이 존재하면
+		this.nickname = dto.getNickname(); 
+		if(dto.getBody() != null)          // 입력받은(수정할) 댓글 내용이 존재하면
+		this.body = dto.getBody();
+	}
 }
