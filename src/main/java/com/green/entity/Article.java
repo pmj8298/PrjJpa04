@@ -41,19 +41,20 @@ public class Article {
 	
 	// 자바에 사용하기 위해 만든 내용들
 	//  이거 ArticleDto 에서 쓰려고 만듦
-	// 생성자
+	// 생성자(@AllArgsConstructor를 위에 적든지, 걍 생성자를 적든지 둘 중 하나만)
 	public Article(Long id, String title, String content) {
 		this.id = id;
 		this.title = title;
 		this.content = content;
 	}
 	
-	// toString()
+	// ToString()
 	@Override
 	public String toString() {
 		return "Article [id=" + id + ", title=" + title + ", content=" + content + "]";
 	}
 
+	// 수정하기 위한 용도로 추가
 	public void patch(Article article) {
 		if(article.title != null)
 			this.title = article.title;
