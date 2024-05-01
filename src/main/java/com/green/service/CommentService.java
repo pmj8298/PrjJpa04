@@ -109,7 +109,8 @@ public class CommentService {
 		// 1. 삭제할 댓글 조회 및 예외 처리
 		Comments target = commentRepository.findById(id).orElseThrow( () -> new IllegalArgumentException("댓글 삭제 실패! 대상이 없습니다"));
 		// 2. 실제 db 에서 삭제
+		commentRepository.delete(target);
 		// 3. 삭제 댓글을 dto 로 변환 후 리턴
-		return null;
+		return CommentDto.createCommentDto(target);
 	}
 }
