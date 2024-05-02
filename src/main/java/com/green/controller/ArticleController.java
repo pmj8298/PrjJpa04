@@ -8,13 +8,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.green.dto.ArticleDto;
 import com.green.dto.ArticleForm;
+import com.green.dto.CommentDto;
 import com.green.entity.Article;
 import com.green.repository.ArticleRepository;
+import com.green.service.CommentService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +25,9 @@ public class ArticleController {
 	
 	@Autowired
 	private ArticleRepository articleRepository;
+	
+	@Autowired
+	private CommentService commentService;
 
   // data 입력
   @GetMapping("/articles/WriteForm")
@@ -72,9 +76,16 @@ public class ArticleController {
 	  
 	  // 2번 방법 추천
 	  // id 라는 값을 넘겨서 받고, 값이 없으면 orElse null 로 넘어가라
+	  // id 에 해당하는 게시글 조회
 	  Article articleEntity = articleRepository.findById(id).orElse(null);
 	  System.out.println("1번 조회 결과:" + articleEntity);
-	  model.addAttribute("article",articleEntity); // 조회한 결과 -> model
+	  model.addAttribute("article",articleEntity); // 조회한 게시글 결과 -> model
+	  
+	  // 댓글 목록 조회 ex) 4번 게시글의 댓글 목록 -> model 에 추가
+	  List<CommentDto> commentDtos = commentService.comments(id);
+	  model.addAttribute("commentDtos",commentDtos);
+	  
+	  
 	  return "articles/view"; // articles/view.mustache
   }
   
@@ -89,7 +100,7 @@ public class ArticleController {
 	  List <Article> articleEntityList = articleRepository.findAll();
 	  System.out.println("전체 목록:" + articleEntityList);
 	  model.addAttribute("articleList",articleEntityList);	  
-	  return "articles/list";
+	  return "articles/list"; // /templates/articles/list  .mustache
   }
   
   // 데이터 수정페이지로 이동
@@ -101,7 +112,7 @@ public class ArticleController {
 	  
 	  // 조회한 데이터를 model 에 저장
 	  // edit.mustache에서 <input type="text" name="title" class="form-control" value="{{ article.title }}" /> 중 article 이 "" 안에 들어가야 함
-	  model.addAttribute("article",articleEntity);
+	  model.addAttribute("article",articleEntity); 
 	  // 수정 페이지로 이동한다
 	  
 	  return "articles/edit";
