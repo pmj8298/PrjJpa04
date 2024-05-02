@@ -54,7 +54,6 @@ public class CommentApiController {
 			){
 		CommentDto createdDto = commentService.create(articleId,dto);
 		 // 결과 응답
-		
 			return  ResponseEntity.status(HttpStatus.OK).body(dto);
 		
 	}

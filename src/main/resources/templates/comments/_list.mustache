@@ -1,6 +1,7 @@
-<div>
-  <div class="card">
+<div id="comments-list">
     {{#commentDtos}}
+    <!-- m-2: margin 50% /comments-id -> commentDtos 안에 있는 id를 꺼냄 -->
+  <div class="card m-2 id="comments-{{id}}"">
     <div class="card-header">
       {{nickname}}
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -14,6 +15,6 @@
     <div class="card-body">
       {{body}}
     </div>
-    {{/commentDtos}}
   </div>
+    {{/commentDtos}}
 </div>

@@ -65,8 +65,8 @@ public class ArticleController {
   // ✔- 이모지: window 키 + .
   // No default constructor for entity'com.green.entity.Article' error : Article 에 @NoArgsConstructor 추가
   // localhost:9090/articles/1✔
-  @GetMapping("/articles/{id}")
-  public String view(@PathVariable(value="id") Long id, Model model) {
+  @GetMapping("/articles/{idx}")
+  public String view(@PathVariable(value="idx") Long idx, Model model) {
 	  
 	  // 1번 방법
 	  // Article articleEntity = articleRepository.findById(id); // Error
@@ -77,12 +77,12 @@ public class ArticleController {
 	  // 2번 방법 추천
 	  // id 라는 값을 넘겨서 받고, 값이 없으면 orElse null 로 넘어가라
 	  // id 에 해당하는 게시글 조회
-	  Article articleEntity = articleRepository.findById(id).orElse(null);
+	  Article articleEntity = articleRepository.findById(idx).orElse(null);
 	  System.out.println("1번 조회 결과:" + articleEntity);
 	  model.addAttribute("article",articleEntity); // 조회한 게시글 결과 -> model
 	  
 	  // 댓글 목록 조회 ex) 4번 게시글의 댓글 목록 -> model 에 추가
-	  List<CommentDto> commentDtos = commentService.comments(id);
+	  List<CommentDto> commentDtos = commentService.comments(idx);
 	  model.addAttribute("commentDtos",commentDtos);
 	  
 	  
