@@ -5,6 +5,15 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h2>Hello World</h2>
+	<h2 style="color:blue" data-commentid="없는 글자">Hello World</h2>
+	<p>큰 글자를 클릭하면 배경색이 노란색이 됩니다</p>
+	
+	<script>
+	  const h2El = document.querySelector('h2')
+	  
+	  console.dir(h2El)
+	  console.log(h2El)
+	  alert(h2El.dataset.commentid)
+	</script>
 </body>
 </html>
