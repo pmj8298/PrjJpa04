@@ -36,8 +36,8 @@ public class CommentApiController {
 	
 	 
 	
-	// 2. 댓글 생성(POST)
-	// Post http://localhost:9090/api/articles/{articleId}/comments
+	// 2. 댓글 생성(추가)(POST)
+	// Post http://localhost:9090/api/articles/4/comments
 	// 입력 data  : {"article_id":4, "nickname":"Hoon", "body":"이프 온리"} - 새 댓글
 	// 결과       : {"id": null,"article_id": 4,"nickname": "Hoon","body": "이프 온리"}
 	// error 입력 : {id: 4,"article_id": 4,"nickname": "Hoon","body": "이프 온리"}
@@ -50,7 +50,7 @@ public class CommentApiController {
 	
 	public ResponseEntity<CommentDto> create(
 			@PathVariable Long articleId, // {articleId}- 게시글 번호
-			@RequestBody CommentDto dto   // 입력된 자료들 - input, select
+			@RequestBody CommentDto dto   // 입력된 자료들 - input, select : JS fetch 의 body 안에 있는 것(_new.mustache)
 			){
 		CommentDto createdDto = commentService.create(articleId,dto);
 		 // 결과 응답

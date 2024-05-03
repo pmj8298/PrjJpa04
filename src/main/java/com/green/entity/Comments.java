@@ -46,6 +46,8 @@ public class Comments {
 		
 		// dto.getArticleId() : 입력받은 게시글의 id
 		// article.getId()    : 조회한 게시글의 id 
+		System.out.println("article:" + article);
+		System.out.println("dto:" + dto);
 		if(dto.getArticleId() != article.getId())
 			throw new IllegalArgumentException(
 					"댓글 생성 실패! 게시글의 id가 잘못되었습니다");
