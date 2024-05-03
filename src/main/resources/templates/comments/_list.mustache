@@ -135,7 +135,9 @@ commentUpdateBtn.addEventListener("click",(event) => {
 				                        : "댓글 수정 실패!!!"
 				                        
 		     alert(msg);
+		     // 1. 전체 페이지 새로고침- Controller 다시 요청
 		     window.location.reload(); 
+		     // 2. Get 으로 댓글만 조회 -> 결과 json -> html 로 변경 한 후 <div id="comments-list"> 변경 내용을 수정
 			})
 
 });
